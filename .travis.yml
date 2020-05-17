@@ -15,7 +15,7 @@ after_success:
   - docker build -t helenosheaa/multi-server -f ./server 
   - docker build -t helenosheaa/multi-worker -f ./worker 
 
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password--stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin docker.io
 
   - docker push helenosheaa/multi-client
   - docker push helenosheaa/multi-nginx
