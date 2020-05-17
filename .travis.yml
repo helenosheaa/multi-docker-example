@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t helenosheaa/react-test -f ./client/Dockerfile.dev .
+
+script:
+  - docker run -e CI=true helenosheaa/react-test npm test
+
+after_success:
+  - docker build -t helenosheaa/multi-client -f ./client 
+  - docker build -t helenosheaa/multi-nginx -f ./nginx 
+  - docker build -t helenosheaa/multi-server -f ./server 
+  - docker build -t helenosheaa/multi-worker -f ./worker 
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password--stdin
+
+  - docker push helenosheaa/multi-client
+  - docker push helenosheaa/multi-nginx
+  - docker push helenosheaa/multi-server
+  - docker push helenosheaa/multi-worker
