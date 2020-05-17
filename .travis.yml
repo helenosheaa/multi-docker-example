@@ -21,3 +21,16 @@ after_success:
   - docker push helenosheaa/multi-nginx
   - docker push helenosheaa/multi-server
   - docker push helenosheaa/multi-worker
+
+deploy: 
+  edge: true
+  provider: elasticbeanstalk
+  region: "eu-west-2"
+  app: "multi-docker"
+  env: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-eu-west-2-722207080935"
+  bucket_path: "multi-docker"
+  on: 
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
